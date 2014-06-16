@@ -4,6 +4,9 @@ class CarsController < ActionController::Base
   end
 
   def show
-    @car = Car.find(params[:id])
+    @car = Car.find_by(:id => params[:id])
+    if @car.nil?
+      render json: {}, status: 404
+    end
   end
 end

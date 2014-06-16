@@ -100,6 +100,18 @@ describe "Cars API" do
       expect(response.code.to_i).to eq 200
       expect(JSON.parse(response.body)).to eq(expected_response)
     end
+
+    it 'returns one car' do
+      ford = create_make(name: "Ford")
+      red_ford = create_car(color: "red", doors: 4, purchased_on: "1973-10-04", make_id: ford.id)
+
+
+      get "/cars/#{red_ford.id + 1}", {}, {'Accept' => 'application/json'}
+
+      expect(response.code.to_i).to eq 404
+      expect(JSON.parse(response.body)).to eq({})
+
+    end
   end
 end
 
