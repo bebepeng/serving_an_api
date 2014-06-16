@@ -54,5 +54,23 @@ describe "Cars API" do
       expect(response.code.to_i).to eq 200
       expect(JSON.parse(response.body)).to eq(expected_response)
     end
+
+    it 'returns a 200 for empty cars' do
+      get '/cars', {}, {'Accept' => 'application/json'}
+
+      expected_response = {
+        "_links" => {
+          "self" => {
+            "href" => "/cars"
+          }
+        },
+        "_embedded" => {
+          "cars" => []
+        }
+      }
+
+      expect(response.code.to_i).to eq 200
+      expect(JSON.parse(response.body)).to eq(expected_response)
+    end
   end
 end
